@@ -1,0 +1,8 @@
+44c44,48
+< #if defined(BOOST_HAS_STDINT_H) && (!defined(__GLIBC__) || defined(__GLIBC_HAVE_LONG_LONG))
+---
+> //#if defined(BOOST_HAS_STDINT_H) && (!defined(__GLIBC__) || defined(__GLIBC_HAVE_LONG_LONG))
+> #if defined(BOOST_HAS_STDINT_H)        \
+>   && (!defined(__GLIBC__)               \
+>   || defined(__GLIBC_HAVE_LONG_LONG)     \
+>   || (defined(__GLIBC__) && ((__GLIBC__ > 2) || ((__GLIBC__ == 2) && (__GLIBC_MINOR__ >= 17))))) 

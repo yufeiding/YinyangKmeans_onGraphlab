@@ -1,0 +1,54 @@
+Yinyang Kmeans
+================================
+
+
+Algorithm:
+--------------------------------
+Details of Yinyang Kmeans can be found in paper:
+                   Yinyang K-Means: A Drop-In Replacement of the Classic K-Means with Consistent Speedup
+This paper presents Yinyang K-means, a new algorithm for K-means clustering. By clustering the centers in the initial stage, and leveraging efficiently maintained lower and upper bounds between a point and centers, it more effectively avoids unnecessary distance calculations than prior algorithms. It significantly outperforms classic K-means and prior alternative K-means algorithms consistently across all experimented data sets, cluster numbers, and machine configurations. The consistent, superior performance — plus its simplicity, user-control of overheads, and guarantee in producing the same clustering results as the standard K-means does — makes Yinyang K-means a drop-in replacement of the classic K-means with an order of magnitude higher performance.
+
+
+Implementation
+-------------------------------
+Yinyang Kmeans are implemented in Graphlab.
+
+
+Dependences
+------------------------------
+Dependences for Graphlab are the same as Graplab. Details can be found in {Graphlab_folder}/README.
+
+
+
+Compiling
+-------------------------------
+compile graphlab and Yinyang: (Instruction for compiling graphlab can also be found in {Graphlab_folder}/README)
+
+     cd ./{Graphlab_folder}
+     ./configure
+     cd release/toolkits/clustering/
+     make -j4
+
+Note: 
+If you have error "like uintptr_t was not declared in this scope"
+try command:
+     patch ../../../deps/local/include/boost/cstdint.hpp < ../../../cstint.patch
+
+
+
+Run Yinyang Kmeans
+-------------------------------
+go to folder: {Graphlab_folder}/release/toolkits/clustering/ 
+(This package is tested under: Ubuntu 14.04.2 LTS, Intel(R) Core(TM) i5-4570 CPU @ 3.20GHz)
+1)   ./yinyangkmeans --h
+check the command line options for yinyangkmeans
+2) Inputs:
+ a. run input generater:     
+      ./generate_synthetic [NClusters] [Dimensions] [Ndata]
+ b. try real word input form UCI repository. One such file is put under  {Graphlab_folder}/data
+3) testing runs
+       time ./standardkmeans --data=../../../data/kegg_shuffled_normal.txt --clusters=256
+       time ./yinyangkmeans --data=../../../data/kegg_shuffled_normal.txt --clusters=256 
+       time ./yinyangkmeans --data=../../../data/kegg_shuffled_normal.txt --clusters=256  --availablememorysize=100
+       time ./yinyangkmeans --data=../../../data/kegg_shuffled_normal.txt --clusters=256  --availablememorysize=1000000
+
